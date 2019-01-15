@@ -15,7 +15,7 @@ int main() {
   for(long long i = 0; i < tests; i++) {
     
     
-    if(3 % 3 == 0) {
+    if(1 % 3 == 0) {
       cout << "YES", cout << "\n";
     } else {
       cout << "NO", cout << "\n";
