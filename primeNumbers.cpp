@@ -19,7 +19,7 @@ bool prime(long long n) {
 int main() {
   long long n;
   cin >> n;
-  vector<long long> second;
+  long long second[(n + 10)];
   
   if (prime(n + 1)) {
     for(long long i = 1; i <= n; i++){
@@ -38,7 +38,7 @@ int main() {
 
     while(i <= n) {
       for (long long a = 0; a < r; a++) {
-        second.push_back(s - a);
+        second[(i + a)] = (s - a);
       }
       
       i += r;
@@ -52,7 +52,7 @@ int main() {
 
     cout << "\n";
 
-    for(long long j = 0; j < n; j++) {
+    for(long long j = 1; j <= n; j++) {
       long long number = second[j];
       cout << number, cout << " ";
     }
@@ -71,17 +71,17 @@ int main() {
       s = i - r;
       
       for (long long a = 0; a <= s; a++) {
-        second.push_back(r + a);
+        second[(r + a)] = (r + a);
       }
       
       i -= r;
       
       if (r == 3) {
-        second.push_back(1);
-        second.push_back(2);
+        second[(n + 1)] = 1;
+        second[(n + 2)] = 2;
 	break;
       } else if (r == 2) {
-        second.push_back(1);
+        second[(n + 1)] = 1;
 	break;
       }
     }
@@ -92,11 +92,12 @@ int main() {
 
     cout << "\n";
 
-    for(long long j = 0; j < n; j++) {
+    for(long long j = 3; j <= (n + 2); j++) {
       long long number = second[j];
       cout << number, cout << " ";
     }
   }
-    
+  
+  cout << "\n";
   return 0;
 }
