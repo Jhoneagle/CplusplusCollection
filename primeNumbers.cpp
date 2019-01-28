@@ -19,22 +19,22 @@ bool prime(long long n) {
 int main() {
   long long n;
   cin >> n;
-  long long second[(n + 10)];
   
   if (prime(n + 1)) {
     for(long long i = 1; i <= n; i++){
-      cout << i, cout << " ";
+      cout << i << " ";
     }
 
     cout << "\n";
 
     for(long long j = n; j > 0; j--) {
-      cout << j, cout << " ";
+      cout << j << " ";
     }
   } else if (((n + 1) != 0) && (((n + 1) &((n + 1) - 1)) == 0)) {
     long long r = 1;
     long long i = 1;
     long long s = 1;
+    vector<long long> second(n + 1);
 
     while(i <= n) {
       for (long long a = 0; a < r; a++) {
@@ -47,19 +47,20 @@ int main() {
     }
 
     for(long long j = 1; j <= n; j++){
-      cout << j, cout << " ";
+      cout << j << " ";
     }
 
     cout << "\n";
 
-    for(long long j = 1; j <= n; j++) {
+    for(long long j = 0; j < n; j++) {
       long long number = second[j];
-      cout << number, cout << " ";
+      cout << number << " ";
     }
   } else {
     long long r;
     long long s;
     long long i = n;
+    vector<long long> second;
 
     while(i > 0) {
       for(long long a = (i - 1); a >= 1; a--) {
@@ -71,30 +72,30 @@ int main() {
       s = i - r;
       
       for (long long a = 0; a <= s; a++) {
-        second[(r + a)] = (r + a);
+        second.push_back(r + a);
       }
       
       i -= r;
       
       if (r == 3) {
-        second[(n + 1)] = 1;
-        second[(n + 2)] = 2;
+        second.push_back(1);
+        second.push_back(2);
 	break;
       } else if (r == 2) {
-        second[(n + 1)] = 1;
+        second.push_back(1);
 	break;
       }
     }
 
     for(long long j = n; j > 0; j--){
-      cout << j, cout << " ";
+      cout << j << " ";
     }
 
     cout << "\n";
 
-    for(long long j = 3; j <= (n + 2); j++) {
+    for(long long j = 0; j < n; j++) {
       long long number = second[j];
-      cout << number, cout << " ";
+      cout << number << " ";
     }
   }
   
