@@ -7,14 +7,14 @@ using namespace std;
 int main() {
   long long n;
   cin >> n;
-  vector<long long> v(n + 1);
+  vector<long long> v(n + 2);
   long long l = 0;
 
   for (long long i = 0; i < n; i++) {
     cin >> l;
     
-    if (l >= v.size()) {
-      long long temp = l + 1;
+    if (l >= n) {
+      long long temp = l + 2;
       v.resize(temp);
       n = l;
     }
