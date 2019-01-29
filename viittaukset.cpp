@@ -7,25 +7,26 @@ using namespace std;
 int main() {
   long long n;
   cin >> n;
-  vector<long long> v(n + 2);
+  unordered_map<long long, long long> v;
   long long l = 0;
 
   for (long long i = 0; i < n; i++) {
     cin >> l;
-    
-    if (l >= n) {
-      long long temp = l + 2;
-      v.resize(temp);
-      n = l;
+    if (v.find(l) != v.end()) {
+      v[l]++;
+    } else {
+      v[l] = 1;
     }
-    
-    v[l] += 1;
   }
   
   l = 0;
   
   for (long long i = n; i > 0; i--) {
-    l += v[i];
+    if (v.find(i) != v.end()) {
+      l += v[i];
+    } else {
+      l = 0;
+    }
     
     //cout << "debug: " << i << " and " << v[i] << "\n";
     
