@@ -4,62 +4,46 @@
 using namespace std;
 
 bool prime(long long n) {
-  bool isPrime = true;
+  if (n <= 3) {
+    return (n > 1);
+  } 
   
-  for(long long i = 2; i <= (n / 2); i++) {
-    if(n % i == 0) {
-      isPrime = false;
-      break;
-    }
+  if (((n % 2) == 0) || ((n % 3) == 0)) {
+    return false;
   }
   
-  return isPrime;
+  long i = 5;
+  
+  while ((i * i) <= n) {
+      if (((n % i) == 0) || ((n % (i + 2)) == 0)) {
+          return false;
+      }
+
+      i += 6;
+  }
+  
+  return true;
 }
 
 int main() {
   long long n;
   cin >> n;
-  vector<long long> second;
   
   if (prime(n + 1)) {
-    for(long long i = 1; i <= n; i++){
-      cout << i, cout << " ";
+    for(long long i = 1; i <= n; i++) {
+      cout << i << " ";
     }
  
     cout << "\n";
  
     for(long long j = n; j > 0; j--) {
-      cout << j, cout << " ";
-    }
-  } else if (((n + 1) != 0) && (((n + 1) &((n + 1) - 1)) == 0)) {
-    long long r = 1;
-    long long i = 1;
-    long long s = 1;
- 
-    while(i <= n) {
-      for (long long a = 0; a < r; a++) {
-        second.push_back(s - a);
-      }
-      
-      i += r;
-      r *= 2;
-      s = (i - 1) + r;
-    }
- 
-    for(long long j = 1; j <= n; j++){
-      cout << j, cout << " ";
-    }
- 
-    cout << "\n";
- 
-    for(long long j = 0; j < n; j++) {
-      long long number = second[j];
-      cout << number, cout << " ";
+      cout << j << " ";
     }
   } else {
     long long r;
     long long s;
-    long long i = n;
+    vector<long long> second;
+    long long i = n; //asked number
  
     while(i > 0) {
       for(long long a = (i - 1); a >= 1; a--) {
@@ -74,27 +58,32 @@ int main() {
         second.push_back(r + a);
       }
       
-      i -= r;
+      i = (r - 1);
       
-      if (r == 3) {
+      if (i == 3) {
+        second.push_back(2);
+        second.push_back(3);
+        second.push_back(1);
+	break;
+      } else if (i == 2) {
         second.push_back(1);
         second.push_back(2);
 	break;
-      } else if (r == 2) {
+      } else if (i == 1) {
         second.push_back(1);
 	break;
       }
     }
  
     for(long long j = n; j > 0; j--){
-      cout << j, cout << " ";
+      cout << j << " ";
     }
  
     cout << "\n";
  
     for(long long j = 0; j < n; j++) {
       long long number = second[j];
-      cout << number, cout << " ";
+      cout << number << " ";
     }
   }
     
