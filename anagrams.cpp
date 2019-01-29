@@ -7,7 +7,7 @@ using namespace std;
 bool compare(string a, string b) { 
   unordered_map<char, int> mapA;
   unordered_map<char, int> mapB;
-	
+
   for (int i = 0; i < a.length(); i++) {
     mapA[a[i]]++; 
   }
@@ -27,29 +27,24 @@ int main() {
   long long n;
   cin >> n;
 
-  vector<string> words(n);
-  vector<string> result;
   string s;
+  cin >> s;
 
-  for (long long i = 0; i < n; i++) {
-    cin >> s;
-    words[i] = s;
-  }
-  
-  result.push_back(words[0]);
-  
+  vector<string> result;
+  result.push_back(s);
+
   for (long long i = 1; i < n; i++) {
-    string temp = words[i];
+    cin >> s;
     bool isEquilevant = false;
     
     for (auto r : result) {
-      if (compare(temp, r)) {
+      if (compare(s, r)) {
         isEquilevant = true;
         break;
       }
     }
     
-    if (isEquilevant == false) result.push_back(temp);
+    if (isEquilevant == false) result.push_back(s);
   }
   
   cout << result.size() << "\n";
