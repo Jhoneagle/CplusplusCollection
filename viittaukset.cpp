@@ -9,6 +9,7 @@ int main() {
   cin >> n;
   map<long long, long long> v;
   long long l = 0;
+  long long previous = -1;
 
   for (long long i = 0; i < n; i++) {
     cin >> l;
@@ -30,13 +31,15 @@ int main() {
   for (auto i = v.rbegin(); i != v.rend(); i++) { 
       l += i->second;
 
-      if (l == i->first || (i == v.rbegin() && l > i->first)) {
+      if (l == i->first || (i == v.rbegin() && l > i->first) || ((i->first - previous) == -1 && l > i->first)) {
         cout << i->first << "\n";
         return 0;
       } else if (l > i->first) {
         long long result = l - i->second;
 	cout << result << "\n";
         return 0;
+      } else {
+        previous = i->first;
       }
   }
   
