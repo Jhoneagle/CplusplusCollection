@@ -6,8 +6,8 @@ using namespace std;
 int main() {
   long tests;
   cin >> tests;
-  vector <long long> firstNumbers;
-  vector <long long> secondNumbers;
+  vector<long long> firstNumbers;
+  vector<long long> secondNumbers;
   long long a;
   long long b;
 	
