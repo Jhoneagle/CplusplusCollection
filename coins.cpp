@@ -8,26 +8,10 @@ using namespace std;
 long long n;
 vector<long long> v;
 
-long checkReverse(long long t) {
-  long long wanted = -1;
-  long long sum = 0;
-  
-  for (int j = n; j >= 0; j--) {
-    if ((sum + v[j]) == t) {
-      wanted = sum + v[j];
-      break;
-    } else if ((sum + v[j]) < t) {
-      sum += v[j];
-    }
-  }
-  
-  return wanted;
-}
-
 int main() {
   cin >> n;
   long long l = 0;
-  long long r = 0;
+  long long r = -1;
   
   for (long long i = 0; i < n; i++) {
     cin >> l;
@@ -35,15 +19,21 @@ int main() {
   }
   
   sort(v.begin(),v.end());
-  long long cap = 1000000000;
   
-  for (long long i = 1; i < cap; i++) {
-    long long temp = checkReverse(i);
-      
-    if (temp == -1) {
-      r = i;
-      break;
+  if (v[0] != 1) {
+    r = 1;
+  } else {
+    long long sum = 1;
+  
+    for (auto x : v) {
+      if (x > (sum + 1)) {
+        break;
+      } else {
+        sum += x;
+      }
     }
+    
+    r = sum;
   }
   
   cout << r << '\n';
