@@ -4,12 +4,33 @@
 using namespace std;
 
 long long n;
+long long size;
 vector<long long> l;
-unordered_map<long long, long long> numbers;
+map<long long, long long> prevSum;
+
+long long findSublaySum() {
+  long long result = 0; 
+  long long currsum = 0; 
+  
+  for (long long i = 0; i < size; i++) { 
+    currsum += l[i];
+    
+    if (currsum == n)  result++;
+    
+    if (prevSum.find(currsum - n) !=  prevSum.end())  {
+      result += prevSum[currsum - n]; 
+    }
+    
+    prevSum[currsum]++; 
+  } 
+  
+  return result; 
+} 
 
 int main() {
-  long long size;
-  long long result = 0;
+  cin.sync_with_stdio(0);
+  cin.tie(0);
+  long long result;
   long long v;
   cin >> size >> n;
   
@@ -18,14 +39,7 @@ int main() {
     l.push_back(v);
   }
   
-  for (long long i = 0; i < size; i++) {
-    for (long long j = 0; j <= i; j++) {
-      numbers[j] += l[i];
-      
-      if (numbers[j] == n) result++;
-    }
-  }
-  
+  result = findSublaySum();
   cout << result << "\n";
   return 0;
 }
