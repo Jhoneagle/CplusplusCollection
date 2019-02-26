@@ -3,30 +3,27 @@
 
 using namespace std;
 
-long long n;
-long long size;
+long long sublistSize, size, largest, currentValue;
 vector<long long> l;
 map<long long, long long> howMany;
+priority_queue<pair<long long, long long>> mostFreq;
 
 int main() {
-  priority_queue<pair<long long, long long>> mostFreq;
   cin.sync_with_stdio(0);
   cin.tie(0);
-  long long v;
-  cin >> size >> n;
-  long long largest;
+  cin >> size >> sublistSize;
   
   for (long long i = 0; i < size; i++) {
-    cin >> v;
-    l.push_back(v);
+    cin >> currentValue;
+    l.push_back(currentValue);
   }
   
   largest = l[0];
   howMany[l[0]]++;
   
-  for (long long i = 1; i < n; i++) {
-    v = l[i];
-    howMany[v]++;
+  for (long long i = 1; i < sublistSize; i++) {
+    currentValue = l[i];
+    howMany[currentValue]++;
   }
   
   for (auto it = howMany.begin(); it != howMany.end(); it++) {
@@ -36,13 +33,14 @@ int main() {
   largest = -1 * mostFreq.top().second;
   cout << largest << " ";
   
-  for (long long i = n; i < size; i++) {
-    howMany[l[i - n]]--;
-    v = l[i];
-    howMany[v]++;
+  for (long long i = sublistSize; i < size; i++) {
+    howMany[l[i - sublistSize]]--;
+    currentValue = l[i];
+    howMany[currentValue]++;
     
     
     
+    largest = -1 * mostFreq.top().second;
     cout << largest << " ";
   }
   
