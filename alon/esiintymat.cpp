@@ -3,10 +3,10 @@
 
 using namespace std;
 
-long long sublistSize, size, largest, currentValue;
+long long sublistSize, size, largest, currentValue, temp;
 vector<long long> values;
 map<long long, long long> howMany;
-priority_queue<pair<long long, long long>> mostFreq;
+set<pair<long long, long long>> mostFreq;
 
 int main() {
   cin.sync_with_stdio(0);
@@ -14,8 +14,8 @@ int main() {
   cin >> size >> sublistSize;
   
   for (long long i = 0; i < size; i++) {
-    cin >> currentValue;
-    values.push_back(currentValue);
+    cin >> temp;
+    values.push_back(temp);
   }
   
   largest = values[0];
@@ -27,47 +27,34 @@ int main() {
   }
   
   for (auto it = howMany.begin(); it != howMany.end(); it++) {
-    mostFreq.push({it->second, (-1 * it->first)});
+    mostFreq.insert({it->second, (-1 * it->first)});
   }
   
-  largest = -1 * mostFreq.top().second;
+  auto pointer = mostFreq.rbegin();
+  auto pair = *pointer;
+  largest = -1 * pair.second;
   cout << largest << " ";
   
   for (long long i = sublistSize; i < size; i++) {
-    howMany[values[i - sublistSize]]--;
+    temp = values[i - sublistSize];
     currentValue = values[i];
-    howMany[currentValue]++;
     
-    auto top = mostFreq.top();
-    if ((-1 * top.second) == currentValue) {
-      mostFreq.pop();
-      mostFreq.push({howMany[currentValue], top.second});
-    } else {
-      vector<pair<long long, long long>> temp;
+    if (currentValue != temp) {
+      auto sub = mostFreq.find({howMany[temp], (-1 * temp)});
+      if (sub != mostFreq.end()) mostFreq.erase(sub);
+      mostFreq.insert({howMany[temp] - 1, (-1 * temp)});
       
-      while ((-1 * top.second) != currentValue) {
-        mostFreq.pop();
-        
-        if (howMany[(-1 * top.second)] != top.first) top.first = howMany[(-1 * top.second)];
-        
-        temp.push_back(top);
-	
-	if (mostFreq.empty()) break;
-	
-        top = mostFreq.top();
-      }
-      
-      if (mostFreq.empty()) {
-        mostFreq.push({howMany[currentValue], -1 * currentValue});
-      } else {
-        mostFreq.pop();
-        mostFreq.push({howMany[currentValue], top.second});
-      }
-      
-      for (auto e : temp) mostFreq.push(e);
+      auto add = mostFreq.find({howMany[currentValue], (-1 * currentValue)});
+      if (add != mostFreq.end()) mostFreq.erase(add);
+      mostFreq.insert({howMany[currentValue] + 1, (-1 * currentValue)});
     }
     
-    largest = -1 * mostFreq.top().second;
+    howMany[temp]--;
+    howMany[currentValue]++;
+    
+    pointer = mostFreq.rbegin();
+    pair = *pointer;
+    largest = -1 * pair.second;
     cout << largest << " ";
   }
   
