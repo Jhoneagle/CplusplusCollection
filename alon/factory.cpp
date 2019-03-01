@@ -3,51 +3,31 @@
 
 using namespace std;
 
-long long products, machines, currentTime, temp, made;
-priority_queue<pair<long long, long long>> machinesWorking;
-map<long long, long long> nSameMachines;
-
 int main() {
-  cin.sync_with_stdio(0);
-  cin.tie(0);
-  cin >> machines >> products;
-  currentTime = 0;
+  long long n, k, mnd = INT_MAX, mxd = INT_MIN;
+  cin >> n >> k;
+  vector<long long> v(n);
   
-  if (machines == 1) {
-    cin >> temp;
-    cout << (temp * products) << "\n";
-    return 0;
+  for (long long i = 0; i < n; i++) {
+    cin >> v[i];
+    if (v[i] < mnd) mnd = v[i];
   }
+
+  mxd = mnd * k;
+  mnd = k / n + (k % n > 0 ? 1 : 0);
   
-  if (products == 1) {
-    currentTime = 2147483647; // max value
+  while (mnd < mxd) {
+    long long mid = (mnd + mxd) >> 1, item = 0;
     
-    for (long long i = 0; i < machines; i++) {
-      cin >> temp;
-      if (temp < currentTime) currentTime = temp;
+    for (long long i = 0; i < n; i++) item += (mid / v[i]);
+    
+    if (item >= k) {
+      mxd = mid;
+    } else {
+      mnd = mid + 1;
     }
-    
-    cout << currentTime << "\n";
-    return 0;
   }
   
-  for (long long i = 0; i < machines; i++) {
-    cin >> temp;
-    if (nSameMachines.find(temp) == nSameMachines.end()) machinesWorking.push({-temp, -temp});
-    nSameMachines[temp]++;
-  }
-  
-  while (made < products) {
-    auto top = machinesWorking.top();
-    machinesWorking.pop();
-    
-    made += nSameMachines[(-1 * top.second)];
-    
-    currentTime = top.first;
-    long long nextReady = currentTime + top.second;
-    machinesWorking.push({nextReady, top.second});
-  }
-  
-  cout << (-1 * currentTime) << "\n";
+  cout << mnd << endl;
   return 0;
 }
