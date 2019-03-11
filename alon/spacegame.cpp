@@ -3,46 +3,49 @@
 
 using namespace std;
 
-vector<long long> positives;
+vector<long long> list;
+long long n, result, temp;
 
 long long binarySearch(long long needed) {
-  long long newStorage = 0;
-  
-  index = positives.size();
   
   
   
-  return newStorage;
 }
 
+
+
 int main() {
-  long long n, result, temp;
+  cin.sync_with_stdio(0);
+  cin.tie(0);
   cin >> n;
-  vector<long long> negatives;
   result = 0;
   
   for (long long i = 0; i < n; i++) {
     cin >> temp;
-    
-    if (temp < 0) negatives.push_back(temp);
-    
-    if (temp > 0) {
-      positives.push_back(temp);
+    list.push_back(temp);
+  }
+  
+  long long smallestValue = 0
+  long long sum = 0;
+  
+  for (long long i = 0; i < n; i++) {
+    temp = list[i];
+    sum += temp;
+
+    if (temp < smallestValue) smallestValue = temp;
+    if (sum < 0) {
+      cout << -1 << endl;
+      return 0;
     }
   }
   
-  sort(positives.begin(), positives.end());
-  sort(negatives.begin(), negatives.end());
-  
-  for (long long i = 0; i < negatives.size(); i++) {
-    temp = negatives[i];
-    temp = binarySearch(-1 * temp);
+  if (smallestValue < 0) {
+    temp = -1 * smallestValue;
+    result = binarySearch(temp);
     
-    if (temp < 0) {
-      result = -1;
-      break;
-    } else {
-      if (temp > result) result = temp;
+    if (result < temp) {
+      temp -= result;
+      result += binarySearch(temp);
     }
   }
   
