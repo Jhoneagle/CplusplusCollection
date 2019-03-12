@@ -43,6 +43,6 @@ int main() {
       }
   }
   
-  cout << 0 << "\n";
+  cout << n << "\n";
   return 0;
 }
