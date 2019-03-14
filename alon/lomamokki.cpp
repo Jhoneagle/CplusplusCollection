@@ -1,22 +1,39 @@
 #include <iostream>
 #include <bits/stdc++.h>
-
+ 
 using namespace std;
-
+ 
 typedef long long number;
-
+ 
 vector<pair<number, number>> bookings;
+set<pair<number, number>> taken;
 number customers, result, from, to;
 
 bool ok(number start, number end) {
-  for (auto pair : taken) {
-    if (pair.first <= start && pair.second >= start) return false;
-    if (pair.first <= end && pair.second >= end) return false;
+  auto where = taken.lower_bound({start, -1});
+  
+  if (where != taken.end()) {
+    auto value = *where;
+    
+    if (value.first == start) return false;
+    if (value.first <= end) return false;
+    
+    if (where != taken.begin()) {
+      where--;
+      auto previousValue = *where;
+      if (start <= previousValue.second) return false;
+    }
+  } else {
+    if (where != taken.begin()) {
+      where--;
+      auto previousValue = *where;
+      if (start <= previousValue.second) return false;
+    }
   }
   
   return true;
 }
-
+ 
 int main() {
   cin.sync_with_stdio(0);
   cin.tie(0);
@@ -35,7 +52,7 @@ int main() {
       result = i + 1;
       break;
     } else {
-      taken.push_back(pair);
+      taken.insert({pair.first, pair.second});
     }
   }
   
