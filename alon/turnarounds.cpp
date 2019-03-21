@@ -57,38 +57,13 @@ int main() {
 	  number leftTop = left[y - 1][x];
 	  number topTop = top[y - 1][x];
 	  
-	  number smallest = min(min(leftLeft, topLeft + 1), min(leftTop + 1, topTop));
-	  
-	  if (smallest == leftLeft) {
-	    left[y][x] = smallest;
-	    top[y][x] = topLeft + 1;
-	  } else if (smallest == topTop) {
-	    left[y][x] = leftTop + 1;
-	    top[y][x] = smallest;
-	  } else {
-	    if (smallest == (topLeft + 1) && smallest == (leftTop + 1)) {
-	      left[y][x] = smallest;
-	      top[y][x] = smallest;
-	    }else if (smallest == (topLeft + 1)) {
-	      left[y][x] = smallest;
-	      top[y][x] = 1e11;
-	    } else if (smallest == (leftTop + 1)) {
-	      left[y][x] = 1e11;
-	      top[y][x] = smallest;
-	    }
-	  }
+	  left[y][x] = min(leftLeft, topLeft + 1);
+	  top[y][x] = min(leftTop + 1, topTop);
         }
       }
     }
   }
-  /*
-  cout << "debug" << endl;
-  for (number i = 0; i <= n; i++) {
-    for (number j = 0; j <= n; j++) {
-      cout << i << " " << j << ": " << left[i][j] << " " << top[i][j] << endl;
-    }
-  }
-  */
+  
   result = min(left[n][n], top[n][n]);
   if (result > 1e10) result = -1;
   cout << result << endl;
