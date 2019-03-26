@@ -13,11 +13,10 @@ int main() {
   cin >> n >> m;
   
   result = 1;
-  vector<number> values(n + 1);
+  vector<number> values(n + 10);
   
   for (number i = 1; i <= n; i++) {
-    cin >> temp;
-    values[i] = temp;
+    cin >> values[i];
   }
   
   number before = 0;
@@ -31,6 +30,7 @@ int main() {
       
       number valueBefore;
       number valueAfter;
+      number diff = last - before - 1;
       
       if (before > 0) {
         valueBefore = values[before];
@@ -44,19 +44,43 @@ int main() {
         valueAfter = -1;
       }
       
+      number times[(diff + 10)][(m + 10)] = {0};
       
+      if (valueBefore == -1) {
+        for (number a = 1; a <= m; a++) times[0][a] = 1;
+      } else {
+        for (number a = (valueBefore - 1); a <= (valueBefore + 1); a++) times[0][a] = 1;
+	
+	times[0][m + 1] = 0;
+	times[0][0] = 0;
+      }
+      
+      for (number a = 1; a <= diff; a++) {
+	for (number b = 1; b <= m; b++) {
+	  number sum = times[a - 1][b - 1];
+	  sum = (sum + times[a - 1][b])  % 1000000007;
+	  sum = (sum + times[a - 1][b + 1])  % 1000000007;
+	  times[a][b] = sum;
+        }
+      }
+	
+      temp = 0;
+      
+      if (valueAfter == -1) {
+        for (number a = 1; a <= m; a++) temp = (temp + times[diff][a])  % 1000000007;
+      } else {
+	number sum = times[diff][valueAfter - 1];
+        sum = (sum + times[diff][valueAfter])  % 1000000007;
+	sum = (sum + times[diff][valueAfter + 1])  % 1000000007;
+	temp = sum; 
+      }
+      
+      result = (result * temp) % 1000000007;
+      
+      if (last == -1) break;
       
       i = last;
-    }
-    
-    if (values[i] == 0) {
-      if (i != 1 && (values[i - 1] == 1 || values[i - 1] == m)) {
-        result = (result * 2) % 1000000007;
-      } else if (i != n && (values[i + 1] == 1 || values[i + 1] == m)) {
-        result = (result * 2) % 1000000007;
-      } else {
-        result = (result * 3) % 1000000007;
-      }
+      before = last;
     }
   }
   
