@@ -47,15 +47,15 @@ int main() {
       number times[(diff + 10)][(m + 10)] = {0};
       
       if (valueBefore == -1) {
-        for (number a = 1; a <= m; a++) times[0][a] = 1;
+        for (number a = 1; a <= m; a++) times[1][a] = 1;
       } else {
-        for (number a = (valueBefore - 1); a <= (valueBefore + 1); a++) times[0][a] = 1;
+        for (number a = (valueBefore - 1); a <= (valueBefore + 1); a++) times[1][a] = 1;
 	
-	times[0][m + 1] = 0;
-	times[0][0] = 0;
+	times[1][m + 1] = 0;
+	times[1][0] = 0;
       }
       
-      for (number a = 1; a <= diff; a++) {
+      for (number a = 2; a <= diff; a++) {
 	for (number b = 1; b <= m; b++) {
 	  number sum = times[a - 1][b - 1];
 	  sum = (sum + times[a - 1][b])  % 1000000007;
