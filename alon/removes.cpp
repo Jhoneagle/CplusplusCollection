@@ -5,7 +5,7 @@ using namespace std;
 
 typedef long long number;
 
-number n, m, result, temp;
+number n, result, temp;
 #define N (1<<18)
 number tree[2 * N] = {0};
 
@@ -18,44 +18,23 @@ void update(number k, number x) {
   }
 }
 
-number getFirst(number needed) {
-  number i = 1;
+number remove(number index) {
   
-  if (tree[i] >= needed) {
-    while (i < N) {
-      if (tree[2 * i] >= needed) {
-        i *= 2;
-      } else {
-        i = (2 * i) + 1;
-      }
-    }
-  } else {
-    return -1;
-  }
-  
-  return i - N;
 }
 
 int main() {
   cin.sync_with_stdio(0);
   cin.tie(0);
-  cin >> n >> m;
+  cin >> n;
   
   for (number i = 1; i <= n; i++) {
     cin >> temp;
     update(i, temp);
   }
   
-  for (number i = 1; i <= m; i++) {
+  for (number i = 1; i <= n; i++) {
     cin >> temp;
-    number r = getFirst(temp);
-    
-    if (r > 0) {
-      number changed = tree[r + N] - temp;
-      update(r, changed);
-    }
-    
-    cout << r << " ";
+    cout << remove(temp + N) << " ";
   }
   
   cout << endl;
