@@ -31,10 +31,10 @@ number remove(number index) {
     }
   }
   
-  if (tree[i] == 1) {
+  if (tree[i] > 0) {
     i -= N;
     update(i, 0);
-    return v[i];
+    return v[i - 1];
   } else {
     return -1;
   }
@@ -53,7 +53,7 @@ int main() {
   
   for (number i = 1; i <= n; i++) {
     cin >> temp;
-    cout << remove(temp + N) << " ";
+    cout << remove(temp) << " ";
   }
   
   cout << endl;
