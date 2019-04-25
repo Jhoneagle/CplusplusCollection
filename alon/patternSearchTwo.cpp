@@ -26,7 +26,7 @@ int main() {
   cin >> p >> k;
   for (int i = 0; i < k; i++) {
     cin >> s;
-    if (createZ(s, p)) res += "YES";
+    if (create_z(s, p)) res += "YES";
     else res += "NO";
     res += "\n";
   }
