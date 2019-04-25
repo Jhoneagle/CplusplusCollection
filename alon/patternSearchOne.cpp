@@ -33,9 +33,13 @@ int main() {
   string str, pattern;
   cin >> str >> pattern;
   
+  str = pattern + '$' + str;
   vector<int> zTable = create_z(str);
   
-  
+  number s = pattern.size();
+  for (auto v : zTable) {
+    if (v == s) result++; 
+  }
   
   cout << result << endl;
   return 0;
