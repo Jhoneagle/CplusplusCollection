@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool createZ(string s, string p) {
+bool create_z(string s, string p) {
   if (s == p) return true;
   int n = s.size(), m = p.size(), l = 0, r = 0;
   vector<int> z(n);
