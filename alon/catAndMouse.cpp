@@ -93,17 +93,17 @@ int main() {
   cin.sync_with_stdio(0);
   cin.tie(0);
   
-  int n, m;
+  int n, m, a, b;
   cin >> n >> m;
   MaxFlow f(n);
+  
   for (int i = 1; i <= m; i++) {
-    int a, b;
     cin >> a >> b;
-    f.addEdge(a,b,1);
-    f.addEdge(b,a,1);
+    f.addEdge(a, b, 1);
+    f.addEdge(b, a, 1);
   }
   
-  cout << f.maxFlow(1,n) << "\n";
+  cout << f.maxFlow(1, n) << "\n";
   f.findNodes(1);
   
   for (int x = 1; x <= n; x++) {
