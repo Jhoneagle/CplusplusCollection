@@ -21,8 +21,8 @@ struct MaxFlow {
     cap[b].push_back(0);
     real[a].push_back(1);
     real[b].push_back(0);
-    link[a].push_back(adj[b].size() - 1);
-    link[b].push_back(adj[a].size() - 1);
+    link[a].push_back(adj[b].size()-1);
+    link[b].push_back(adj[a].size()-1);
   }
 
   int dest;
@@ -42,7 +42,7 @@ struct MaxFlow {
         cap[x][i] -= r;
         cap[y][j] += r;
 	
-        dfs(adj[x][i], r);
+        dfs(adj[x][i],r);
 	
         if (ok) return;
 	
@@ -62,30 +62,60 @@ struct MaxFlow {
 	
         for (int i = 0; i < seen.size(); i++) seen[i] = 0;
 	
-	dfs(a, z);
+        dfs(a, z);
 	
-	if (!ok) break;
+        if (!ok) break;
 	
-	flow += z;
+        flow += z;
       }
     }
-	
+    
     return flow;
+  }
+
+  void dfs2(int x) {
+    if (seen[x]) return;
+    seen[x] = 1;
+    
+    for (int i = 0; i < adj[x].size(); i++) {
+      if (cap[x][i]) dfs2(adj[x][i]);
+    }
+  }
+
+  void findNodes(int x) {
+    for (int i = 0; i < seen.size(); i++) seen[i] = 0;
+    
+    dfs2(x);
   }
 };
 
 int main() {
   cin.sync_with_stdio(0);
   cin.tie(0);
+  
   int n, m;
   cin >> n >> m;
   MaxFlow f(n);
-  
-  int a, b, c;
   for (int i = 1; i <= m; i++) {
-    cin >> a >> b >> c;
-    f.addEdge(a, b, c);
+    int a, b;
+    cin >> a >> b;
+    f.addEdge(a,b,1);
+    f.addEdge(b,a,1);
   }
   
-  cout << f.maxFlow(1, n) << "\n";
+  cout << f.maxFlow(1,n) << "\n";
+  f.findNodes(1);
+  
+  for (int x = 1; x <= n; x++) {
+    for (int i = 0; i < f.adj[x].size(); i++) {
+      int y = f.adj[x][i];
+      
+      if (f.seen[x] && !f.seen[y] && !f.cap[x][i] && f.real[x][i]) {
+        cout << x << " " << y << "\n";
+      }
+    }
+  }
+  
+  cout << "\n";
+  return 0;
 }
